@@ -1,0 +1,15 @@
+{
+  "subjects": [
+    {
+      "description": "Deformed, missing, duplicated or replaced vehicles; changed paint colors or truck tarpaulin colors; altered vehicle proportions, orientation, trajectories or relative distances; removed, enlarged, moving or reshaped original white ego-vehicle hood.",
+      "appearance_details": "Repainted signs or lane markings, a white numeral replacing the original yellow 40, unreadable invented text, melted vehicle details, ghosting, excessive smoothing and artificial material textures."
+    }
+  ],
+  "background_setting": "Changed road geometry, displaced lane boundaries, moving road markings, warped buildings, invented or missing objects, deep standing water, large-area flooding, an entirely flawless mirrored road without roughness or ripples, absent wet-surface reflections, uniformly matte dry-looking asphalt, snow, ice, dry dusty road, dense fog and whiteout.",
+  "aesthetics": {
+    "color_scheme": "Unnatural color casts, excessive saturation, crushed blacks, overexposure, globally washed-out colors, random brightness changes and changing vehicle colors.",
+    "patterns": "Regular parallel rain lines, thick bright streaks, repeating particle textures, stationary airborne droplets, uniform screen-space rain overlays, full-frame blur, tiling and flickering road reflections."
+  },
+  "temporal_caption": "Flicker, object identity drift, abrupt weather changes, unstable road geometry, jumping lens droplets, splashes disconnected from tires, stationary spray despite vehicle motion, changing traffic signals and discontinuous camera motion.",
+  "physical_realism": "Windshield wipers, invented windshield or cabin structures, large opaque optical droplets, lens-wide water smears, persistent obstruction of most of the view, exaggerated halos, uniform full-frame spray, physically impossible reflections, water flowing against gravity, deep flood waves, changed camera viewpoint and changed hood dimensions."
+}

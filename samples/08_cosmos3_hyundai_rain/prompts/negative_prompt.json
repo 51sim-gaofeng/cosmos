@@ -1,0 +1,15 @@
+{
+  "subjects": [
+    {
+      "description": "Avoid distorted, duplicated, missing, or deformed vehicles and objects. Preserve the original vehicle identities, shapes, proportions, positions, orientations, and relative distances. Do not alter traffic participants, road signs, lane markings, roadside structures, or the original white ego-vehicle hood.",
+      "appearance_details": "Avoid blurry edges, unnatural textures, excessive smoothing, artificial details, ghosting, inconsistent reflections, color bleeding, and unrealistic material appearance. Preserve the original appearance and fine details of vehicles, road signs, buildings, and other scene objects."
+    }
+  ],
+  "background_setting": "Avoid incorrect road geometry, warped buildings, deformed roadside objects, altered lane layouts, changed road boundaries, duplicated structures, and inconsistent background details. Do not introduce unrelated objects or remove existing scene elements. Avoid snow-covered roads if they are not intended by the target weather condition, dry dusty surfaces, heavy fog, blizzard conditions, whiteout, excessive snow accumulation, mirrored road surfaces, and unrealistic water or snow overlays.",
+  "aesthetics": {
+    "color_scheme": "Avoid overexposure, underexposure, excessive saturation, unnatural color casts, washed-out colors, crushed shadows, and inconsistent brightness or color temperature between consecutive frames. Maintain natural lighting, realistic contrast, and coherent colors consistent with the target weather conditions.",
+    "patterns": "Avoid repetitive textures, visible tiling, smeared surfaces, artificial patterns, texture flickering, inconsistent snow or wet-road coverage, and abrupt texture changes between frames. Preserve realistic road-surface details and natural material transitions."
+  },
+  "temporal_caption": "Avoid temporal flickering, frame-to-frame inconsistency, ghosting, motion trails, duplicated or disappearing objects, sudden appearance changes, unstable textures, inconsistent lighting, and abrupt weather transitions. Maintain smooth temporal continuity, stable object identities, consistent scene geometry, and natural motion throughout the entire video.",
+  "physical_realism": "Avoid physically implausible lighting, reflections, shadows, snow accumulation, wet-road reflections, precipitation, and atmospheric effects. Ensure that snow, moisture, road reflections, and environmental lighting behave consistently with the target weather conditions. Avoid excessive particle effects, unrealistic spray, rain droplets attached to the camera lens, windshield wipers, artificial water overlays, and changes to the camera viewpoint or camera pose."
+}

@@ -1,0 +1,36 @@
+{
+  "subjects": [
+    {
+      "description": "Original traffic participants in real Hyundai front-facing driving footage during sustained heavy daytime rain.",
+      "appearance_details": "Preserve the identity, original paint colors, dimensions, proportions, positions, orientation and motion of every source vehicle. Preserve the dark gray truck tarpaulin and red truck body, and the yellow road numeral 40. Vehicle paint and glass appear wet with natural highlights. Preserve the original white ego-vehicle hood at exactly the same shape, size and location.",
+      "action": "Follow the original trajectories and relative distances exactly. Tire contact with shallow road water produces dynamic splashes and backward spreading spray attached to each moving wheel and vehicle wake, varying naturally with motion.",
+      "state_changes": "Clearly visible dense fine rain streaks cross the scene continuously. Road water creates prominent localized glossy reflections beneath and beside existing vehicles. Heavy rain changes surface wetness, visibility and lighting, not scene geometry or object identity."
+    }
+  ],
+  "background_setting": "Transform the original road into sustained heavy rain with clearly visible fine rain streaks. Asphalt becomes dark, saturated and visibly glossy, with a shallow continuous water film and localized shallow puddles in existing ruts and low areas. Make local specular reflections a prominent visible feature: existing vehicles, red truck body, barriers and brighter sky regions produce recognizable but softened, vertically elongated reflections on wet pavement below them. Smooth shallow puddles have stronger mirror-like patches, interrupted by ripples, tire tracks and rough asphalt between patches. Reflection positions and perspective follow the source objects and road plane; reflected colors match existing objects. Do not make the entire road a flawless mirror. Lane markings remain anchored at their original positions, widths, shapes and colors; water may soften their contrast without moving or repainting them. Preserve the original road layout, barriers, signs, buildings, vegetation and perspective. Do not flood the road.",
+  "precipitation": "Dense, clearly visible fine rain streaks fall continuously across foreground and midground, especially visible against dark vehicles, trees and buildings. Droplets create distinct short-to-medium thin motion trails, moderately bright against dark backgrounds without thick white rods. Vary streak length, direction, density and brightness naturally with depth, gravity, wind and camera-relative movement. Rain must be visibly falling rather than inferred only from haze or wet pavement. Distant rain curtains reduce background contrast gradually. No regular parallel grid or repeating particle texture.",
+  "visibility": "Near objects remain relatively clear while distant vehicle edges, signs, buildings and road textures progressively lose contrast through accumulated rainfall. Use a dark gray overcast atmosphere with natural depth-dependent attenuation, not dense fog or a uniform whiteout. Keep nearby road geometry and vehicles identifiable.",
+  "camera_optics": "Enable only a few small irregular droplets on the camera optical surface, occupying a small fraction of the image. They cause localized refraction and local softness; some slide slowly or merge naturally over time. Most of the view remains unobstructed. Existing lamp highlights may show mild localized scattering near droplets. Do not invent a windshield, cabin reflections, windshield frame or wipers.",
+  "lighting": {
+    "conditions": "Dim natural overcast daytime illumination during heavy rain, not night.",
+    "illumination_effect": "Prominent physically coherent local specular reflections on water-film pavement: brighter overcast sky highlights and reflections of existing vehicle bodies, barriers and illuminated lamps contrast with dark wet asphalt. Preserve reflected object colors and break reflections with rain ripples and roughness. Soft shadows and limited local light scattering. Do not invent headlights or change traffic signal states."
+  },
+  "aesthetics": {
+    "composition": "Match the exact source framing, original white hood, horizon and field of view.",
+    "color_scheme": "Natural darker wet asphalt, original vehicle colors, green vegetation and gray overcast sky.",
+    "mood_atmosphere": "Realistic heavy rain with noticeable precipitation, shallow surface water and tire spray, without a disaster flood.",
+    "patterns": "Clearly resolved irregular fine rain streaks, prominent glossy reflection patches broken by ripples and asphalt texture, and localized vehicle spray, with stable materials and identities."
+  },
+  "cinematography": {
+    "camera_motion": "Follow the source camera trajectory exactly. No added shake, zoom, crop, stabilization shift or pose drift.",
+    "framing": "Preserve the source optical center, mounting height, perspective, field of view and original white ego-vehicle hood dimensions.",
+    "focus": "Keep most near-scene details sharp except beneath the few localized lens droplets; reduce distant contrast physically through rain."
+  },
+  "style_medium": "Live-action video",
+  "artistic_style": "Photorealistic autonomous-driving sensor footage",
+  "context": "Weather-only transformation of real front-camera footage into sustained heavy rain, retaining original scene identities and geometry.",
+  "temporal_caption": "Throughout this {duration}-second clip, dense clearly visible fine rain streaks fall continuously through foreground and midground, with depth-dependent rain curtains farther away. Dark glossy asphalt and shallow water films show prominent local specular reflections of existing vehicles, barriers and bright sky, softened and elongated along the road perspective, broken by rainfall ripples and tire contact. Reflections track source objects naturally without flicker. Dynamic tire spray stays attached to original moving vehicles. A few small lens droplets slide or merge naturally with localized refraction. Preserve all original vehicle identities and trajectories, lane-marking locations and colors, signs, camera pose and white hood shape and dimensions.",
+  "physical_realism": "Visible thin rain trails follow gravity and plausible relative motion with natural variations, never a fixed screen overlay. Shallow puddles follow road geometry; splash and spray originate at tire-water contact and trail behind moving vehicles. Strong local water-film reflections obey road-plane perspective, object motion, surface roughness and existing source lighting; rain ripples disrupt their edges. Atmospheric attenuation increases with distance. Sparse optical-surface droplets distort only local regions. No wipers, deep flooding, whiteout, snow or ice.",
+  "audio_description": "No generated audio.",
+  "aspect_ratio": "16,9"
+}

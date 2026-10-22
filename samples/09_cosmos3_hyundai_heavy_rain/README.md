@@ -8,6 +8,10 @@
 默认 720p、10 fps、93 帧（9.3 秒），GPU 0–3、
 CP=4、50 steps、edge=1.0、blur=0.2/high、seed=2026。
 
+除原始 Hyundai PNG 数据集目录外，也可以通过 `--source-video` 直接输入视频文件。
+脚本会按 `--sample-step` 提取图像帧并生成 RGB、edge 和 blur 控制视频；30 FPS
+输入使用 `--sample-step 3` 时输出为 10 FPS。
+
 ## 提示词
 
 - [正向模板](prompts/positive_prompt.json)
@@ -31,6 +35,17 @@ bash samples/09_cosmos3_hyundai_heavy_rain/run_heavy_rain.sh
 
 # 已有结果只补做拼接
 bash samples/09_cosmos3_hyundai_heavy_rain/run_heavy_rain.sh --comparison-only
+
+# 直接使用 MP4 输入（示例为 30 FPS 视频，采样为 10 FPS）
+COSMOS3_PYTHON=/root/miniconda3/envs/cos-sim/bin/python \
+bash samples/09_cosmos3_hyundai_heavy_rain/run_heavy_rain.sh \
+  --source-video /root/workspace/51sim/data/camera_front_wide_120fov.mp4 \
+  --sample-step 3 \
+  --framework-root /root/workspace/51sim/cosmos-framework-main \
+  --torchrun /root/miniconda3/envs/cos-sim/bin/torchrun \
+  --python /root/miniconda3/envs/cos-sim/bin/python \
+  --model /root/workspace/51sim/models/Cosmos3-Nano \
+  --output-dir /root/workspace/51sim/samples/outputs/hyundai_heavy_rain
 ```
 
 默认输出目录为 `/root/workspace/cosmos3/outputs/cosmos3_sample09_hyundai_front_heavy_rain`。

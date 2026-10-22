@@ -1,0 +1,34 @@
+{
+  "subjects": [
+    {
+      "description": "Original traffic participants in real front-facing autonomous-driving footage during sustained heavy daytime snowfall.",
+      "appearance_details": "Preserve every source vehicle's identity, paint colors, dimensions, proportions, positions, orientation and motion. A thin natural layer of fresh snow rests on vehicle roofs, hoods, trunk lids and other upward-facing exterior surfaces, while windshields, windows, lights and vehicle identity remain visible. Preserve the original white ego-vehicle hood at exactly the same shape, size and location.",
+      "action": "Follow original trajectories and relative distances exactly. Moving vehicles carve stable paired tire ruts through the bright accumulated snow, with compressed gray-white snow walls at the rut edges, light powder disturbance and restrained snow spray attached to tires and vehicle wakes. Tire ruts contain compacted snow, not exposed black asphalt.",
+      "state_changes": "Dense natural snowflakes fall continuously. Approximately 10 cm of compacted snow covers the road surface; snow changes surface state, visibility and lighting without changing scene geometry, object identity, lane layout or camera pose."
+    }
+  ],
+  "background_setting": "Transform the original road into sustained heavy daytime snowfall. Approximately 10 cm of continuous bright white compacted snow completely covers the roadway, producing a broad white snowfield with a softly uneven granular surface. Existing and moving vehicles create clearly visible paired tire ruts that contain only darker gray-white compressed snow; shallow ridges of displaced white snow form along their edges. Do not expose black asphalt within or outside the ruts. Keep lane markings, road boundaries, barriers, signs, buildings and vegetation anchored at their source positions, even when markings are largely covered by snow. Fresh snow visibly settles on every building roof, roof ridge, awning, horizontal ledge and fence top; it also rests naturally on tree crowns, upward-facing branches and shrubs. Snow accumulates on road shoulders and horizontal surfaces without burying vehicles, signs or road geometry. Do not create deep snowbanks, a blizzard whiteout or an impassable road.",
+  "precipitation": "Clearly visible irregular snowflakes fall continuously across foreground and midground. Flakes vary naturally in size, focus, brightness, speed and drift direction with depth, gravity and wind. Nearby flakes may appear softly out of focus; distant flakes are smaller and denser. Avoid regular particle grids, repeated flakes, thick white rain-like rods or a fixed screen overlay.",
+  "visibility": "Use a cool overcast daytime atmosphere with gradual depth-dependent visibility reduction from snowfall. Nearby vehicles, road geometry and lane markings remain identifiable; distant details soften naturally without uniform fog or whiteout.",
+  "camera_optics": "Allow only a few small melting snowflakes or water droplets on the camera optical surface, causing localized refraction or softness. Do not invent a windshield, cabin reflections, windshield frame or wipers.",
+  "lighting": {
+    "conditions": "Natural cold overcast daylight during heavy snow, not night.",
+    "illumination_effect": "Keep original lighting relationships and vehicle colors. Wet slush and compacted snow show soft, physically plausible diffuse reflections without turning the road into a mirror or inventing headlights."
+  },
+  "aesthetics": {
+    "composition": "Match the exact source framing, original white hood, horizon and field of view.",
+    "color_scheme": "Natural cool gray sky, a dominant bright white snow-covered road, subtle gray-white compressed tire ruts and preserved source vehicle colors.",
+    "mood_atmosphere": "Photorealistic sustained heavy snow with a 10 cm accumulated road layer and realistic traction conditions, not a catastrophic snowstorm."
+  },
+  "cinematography": {
+    "camera_motion": "Follow the source camera trajectory exactly. No added shake, zoom, crop, stabilization shift or pose drift.",
+    "focus": "Keep most near-scene details sharp except beneath a few localized melting flakes; reduce distant contrast physically through snowfall."
+  },
+  "style_medium": "Live-action video",
+  "artistic_style": "Photorealistic autonomous-driving sensor footage",
+  "context": "Weather-only transformation of real front-camera footage into sustained heavy daytime snow, retaining original scene identities, geometry and motion.",
+  "temporal_caption": "Throughout this {duration}-second clip, dense irregular snowflakes fall continuously through foreground and midground. A continuous bright white approximately 10 cm compacted snow layer follows the original road perspective and dominates the road appearance. Tire ruts remain attached to the original vehicle trajectories as compressed gray-white channels with stable shallow snow ridges, never black asphalt stripes. Thin snow on vehicle roofs and other upward-facing surfaces remains attached naturally as vehicles move. Snow remains stably accumulated on building roofs, awnings, horizontal ledges, tree crowns and upward-facing branches throughout the clip, without flicker or crawling textures. Snowfall, soft visibility reduction, tire disturbance and sparse melting optical flakes evolve naturally without flicker. Preserve all original vehicle identities and trajectories, lane markings, signs, camera pose and white hood shape and dimensions.",
+  "physical_realism": "Snowflakes follow gravity and plausible wind with depth-dependent parallax. Approximately 10 cm of compacted snow is visibly supported by the road surface, with ruts and displaced snow caused by tire contact. Tire disturbance originates at moving wheels and trails behind moving vehicles. Thin fresh snow naturally accumulates on vehicle roofs, building roofs, awnings, fence tops, tree crowns and upward-facing branches, but does not cover vertical walls, windows, lights, signs, tree trunks or vehicle geometry. No exposed black or wet asphalt, no thin road dusting, no rain, no thick rain streaks, no deep flooding, no snow walls, no wipers, no full-frame blur and no changing camera viewpoint.",
+  "audio_description": "No generated audio.",
+  "aspect_ratio": "16,9"
+}

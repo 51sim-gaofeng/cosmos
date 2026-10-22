@@ -1,0 +1,15 @@
+{
+  "subjects": [
+    {
+      "description": "Deformed, missing, duplicated or replaced vehicles, road users or scene objects; changed paint colors; altered proportions, orientation, trajectories or relative distances.",
+      "appearance_details": "Repainted signs or lane markings, unreadable invented text, melted vehicle details, ghosting, excessive smoothing and artificial material textures."
+    }
+  ],
+  "background_setting": "Changed road geometry, displaced lane boundaries, moving road markings, warped buildings, invented or missing objects, deep standing water, large-area flooding, flawless mirrored roads, dry asphalt, snow, ice, dense fog and whiteout.",
+  "aesthetics": {
+    "color_scheme": "Unnatural color casts, excessive saturation, crushed blacks, overexposure, globally washed-out colors, random brightness changes and changing vehicle colors.",
+    "patterns": "Regular parallel rain lines, thick bright streaks, repeating particle textures, stationary airborne droplets, uniform screen-space rain overlays, full-frame blur, tiling and flickering road reflections."
+  },
+  "temporal_caption": "Flicker, object identity drift, abrupt weather changes, unstable road geometry, jumping lens droplets, splashes disconnected from tires, stationary spray despite vehicle motion, changing traffic signals and discontinuous camera motion.",
+  "physical_realism": "Windshield wipers, invented windshield or cabin structures, camera housings, large opaque optical droplets, lens-wide water smears, persistent obstruction, exaggerated halos, uniform full-frame spray, physically impossible reflections, water flowing against gravity, deep flood waves and changed camera viewpoints."
+}

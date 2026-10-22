@@ -38,14 +38,34 @@ class SampleConfig:
 def parse_args(config: SampleConfig) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=config.description)
     parser.add_argument("--source-root", type=Path, default=REPO_ROOT / "samples/data/hyundai/seed-5v")
+    parser.add_argument(
+        "--source-video",
+        type=Path,
+        help="MP4/video input to sample directly instead of the Hyundai PNG dataset layout.",
+    )
     parser.add_argument("--output-dir", type=Path, default=config.default_output)
     parser.add_argument("--framework-root", type=Path, default=DEFAULT_FRAMEWORK)
     parser.add_argument("--model", type=Path, default=REPO_ROOT / "models/nano/Cosmos3-Nano")
     parser.add_argument("--log-root", type=Path, default=Path("/root/workspace/cosmos3/outputs/run_logs"))
+    parser.add_argument(
+        "--torchrun",
+        type=Path,
+        help="torchrun executable. Defaults to <framework-root>/.venv/bin/torchrun.",
+    )
+    parser.add_argument(
+        "--python",
+        type=Path,
+        help="Python executable used to discover CUDA library paths. Defaults to <framework-root>/.venv/bin/python.",
+    )
     parser.add_argument("--resolution", choices=tuple(RESOLUTION_SIZES), default="720")
     parser.add_argument("--sample-step", type=int, default=2)
     parser.add_argument("--max-frames", type=int, default=93)
     parser.add_argument("--chunk-frames", type=int, default=93)
+    parser.add_argument(
+        "--camera-name",
+        default="camera_front_wide",
+        help="Camera name recorded in the output manifest.",
+    )
     parser.add_argument("--conditional-frames", type=int, default=1)
     parser.add_argument("--num-steps", type=int, default=50)
     parser.add_argument("--guidance", type=float, default=5.0)
@@ -61,6 +81,16 @@ def parse_args(config: SampleConfig) -> argparse.Namespace:
         help="Blur applied to the RGB control, not the generated output.",
     )
     parser.add_argument("--seed", type=int, default=2026)
+    parser.add_argument(
+        "--vision-only",
+        action="store_true",
+        help="Skip the unused audio tokenizer for video-only Transfer inference.",
+    )
+    parser.add_argument(
+        "--gpu-blur-control",
+        action="store_true",
+        help="Compute the on-the-fly blur control with the CUDA/NPP bilateral filter.",
+    )
     parser.add_argument("--gpus", default="0,1,2,3")
     parser.add_argument("--dp-shard-size", type=int, default=1)
     parser.add_argument("--cp-size", type=int, default=4)
@@ -95,6 +125,45 @@ def select_frames(source: Path, step: int, limit: int) -> tuple[list[tuple[int, 
     if len(intervals) != 1 or min(intervals) <= 0:
         raise ValueError(f"Source timestamps must have a uniform positive interval: {intervals}")
     return frames[::step][:limit], 1000 / (intervals.pop() * step)
+
+
+def select_video_frames(
+    source: Path, output_dir: Path, step: int, limit: int
+) -> tuple[list[tuple[int, Path]], float]:
+    import cv2
+
+    if not source.is_file():
+        raise FileNotFoundError(f"Video does not exist: {source}")
+    capture = cv2.VideoCapture(str(source))
+    if not capture.isOpened():
+        raise ValueError(f"Failed to open video: {source}")
+
+    native_fps = capture.get(cv2.CAP_PROP_FPS)
+    if not math.isfinite(native_fps) or native_fps <= 0:
+        capture.release()
+        raise ValueError(f"Video has an invalid frame rate: {source}")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    selected: list[tuple[int, Path]] = []
+    frame_index = 0
+    try:
+        while len(selected) < limit:
+            ok, frame = capture.read()
+            if not ok:
+                break
+            if frame_index % step == 0:
+                path = output_dir / f"{frame_index:06d}.png"
+                if not cv2.imwrite(str(path), frame):
+                    raise RuntimeError(f"Failed to write extracted frame: {path}")
+                timestamp_ms = int(round(frame_index * 1000 / native_fps))
+                selected.append((timestamp_ms, path))
+            frame_index += 1
+    finally:
+        capture.release()
+
+    if len(selected) < 2:
+        raise ValueError(f"At least two frames are required from video: {source}")
+    return selected, native_fps / step
 
 
 def build_prompt(
@@ -132,7 +201,11 @@ def make_rgb_video(
     if ffmpeg is None:
         raise FileNotFoundError("FFmpeg is required to package RGB frames.")
     if output.is_file():
-        if probe_video(output) == (width, height, fps, len(frames)):
+        try:
+            valid_output = probe_video(output) == (width, height, fps, len(frames))
+        except (subprocess.CalledProcessError, IndexError, KeyError, ValueError):
+            valid_output = False
+        if valid_output:
             print(f"Reusing validated RGB video: {output}", flush=True)
             return
         output.unlink()
@@ -150,7 +223,7 @@ def make_rgb_video(
                 "-i", listing.name, "-vf",
                 f"scale={width}:{height}:force_original_aspect_ratio=increase:flags=lanczos,"
                 f"crop={width}:{height}",
-                "-fps_mode", "cfr", "-r", str(fps), "-frames:v", str(len(frames)),
+                "-vsync", "cfr", "-r", str(fps), "-frames:v", str(len(frames)),
                 "-c:v", "libx264", "-preset", "fast", "-crf", "0",
                 "-profile:v", "high444", "-pix_fmt", "yuv444p",
                 "-movflags", "+faststart", str(output),
@@ -205,6 +278,12 @@ def launch(
     *, config: SampleConfig, args: argparse.Namespace, spec_path: Path, frame_count: int,
 ) -> None:
     framework_root = args.framework_root.resolve()
+    torchrun = (args.torchrun or framework_root / ".venv/bin/torchrun").resolve()
+    python = (args.python or framework_root / ".venv/bin/python").resolve()
+    if not torchrun.is_file():
+        raise FileNotFoundError(f"torchrun executable not found: {torchrun}")
+    if not python.is_file():
+        raise FileNotFoundError(f"Python executable not found: {python}")
     gpu_ids = [value.strip() for value in args.gpus.split(",") if value.strip()]
     if not gpu_ids or any(not value.isdigit() for value in gpu_ids):
         raise ValueError("--gpus must be a comma-separated list of GPU IDs.")
@@ -226,17 +305,19 @@ def launch(
         )) + "\n", encoding="utf-8",
     )
     command = [
-        str(framework_root / ".venv/bin/torchrun"), f"--nproc-per-node={world_size}",
+        str(torchrun), f"--nproc-per-node={world_size}",
         "--master-addr=127.0.0.1", f"--master-port={args.master_port}",
         "-m", "cosmos_framework.scripts.inference", "--parallelism-preset=latency",
         f"--dp-shard-size={args.dp_shard_size}", "--dp-replicate-size=1",
         f"--cp-size={args.cp_size}", f"--cfgp-size={args.cfgp_size}",
+    ]
+    command.extend((
         "-i", str(spec_path), "-o", str(args.output_dir),
         "--checkpoint-path", str(args.model.resolve()), "--seed", str(args.seed),
         "--no-guardrails",
-    ]
+    ))
     site_packages = subprocess.check_output(
-        [str(framework_root / ".venv/bin/python"), "-c", "import site; print(site.getsitepackages()[0])"],
+        [str(python), "-c", "import site; print(site.getsitepackages()[0])"],
         text=True,
     ).strip()
     cuda_libs = sorted(Path(site_packages).glob("nvidia/*/lib"))
@@ -246,10 +327,15 @@ def launch(
         "COSMOS_TRAINING": "false", "PYTHONUNBUFFERED": "1",
         "PYTORCH_ALLOC_CONF": "expandable_segments:True",
         "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True",
+        "PATH": os.pathsep.join([str(python.parent), env.get("PATH", "")]),
         "LD_LIBRARY_PATH": os.pathsep.join(
             [*(str(path) for path in cuda_libs), env.get("LD_LIBRARY_PATH", "")]
         ).rstrip(os.pathsep),
     })
+    if args.vision_only:
+        env["COSMOS_TRANSFER_VISION_ONLY"] = "1"
+    if args.gpu_blur_control:
+        env["COSMOS_TRANSFER_BLUR_GPU"] = "1"
     print(f"Run log: {log_path}", flush=True)
     print("Command:", " ".join(command), flush=True)
     with log_path.open("wb") as log_file:
@@ -308,8 +394,6 @@ def run(config: SampleConfig) -> None:
         raise ValueError("Conditional frames must be within [0, chunk frames).")
     if not math.isfinite(args.blur_weight) or args.blur_weight < 0:
         raise ValueError("Blur weight must be finite and non-negative.")
-    args.source_root = args.source_root.expanduser().resolve()
-    frames, args.fps = select_frames(args.source_root, args.sample_step, args.max_frames)
     width, height = RESOLUTION_SIZES[args.resolution]
     assets = args.output_dir / "inputs"
     assets.mkdir(parents=True, exist_ok=True)
@@ -318,8 +402,25 @@ def run(config: SampleConfig) -> None:
     prompt_path = assets / "rain_prompt.json"
     negative_path = assets / "rain_negative_prompt.json"
     spec_path = assets / "rain_spec.json"
-    make_rgb_video(frames, rgb_path, args.fps, width, height)
-    make_edge_control_video(frames, edge_path, args.fps, width, height)
+    if args.source_video is not None:
+        args.source_video = args.source_video.expanduser().resolve()
+        legacy_frames = assets / "source_frames"
+        if legacy_frames.exists():
+            shutil.rmtree(legacy_frames)
+        with tempfile.TemporaryDirectory(prefix="cosmos-weather-transfer-") as temporary_directory:
+            frames, args.fps = select_video_frames(
+                args.source_video,
+                Path(temporary_directory) / "source_frames",
+                args.sample_step,
+                args.max_frames,
+            )
+            make_rgb_video(frames, rgb_path, args.fps, width, height)
+            make_edge_control_video(frames, edge_path, args.fps, width, height)
+    else:
+        args.source_root = args.source_root.expanduser().resolve()
+        frames, args.fps = select_frames(args.source_root, args.sample_step, args.max_frames)
+        make_rgb_video(frames, rgb_path, args.fps, width, height)
+        make_edge_control_video(frames, edge_path, args.fps, width, height)
     prompt_dir = config.sample_dir / "prompts"
     write_json(prompt_path, build_prompt(prompt_dir, len(frames), args.fps, width, height))
     write_json(negative_path, json.loads(
@@ -345,8 +446,9 @@ def run(config: SampleConfig) -> None:
         spec["blur"] = {"weight": args.blur_weight, "preset_blur_strength": args.blur_strength}
     write_json(spec_path, spec)
     write_json(assets / "manifest.json", {
-        "source_root": str(args.source_root), "camera": "camera_front_wide",
-        "source_resolution": [3840, 2160], "source_fps": args.fps * args.sample_step,
+        "source_root": str(args.source_root) if args.source_video is None else None,
+        "source_video": str(args.source_video) if args.source_video is not None else None,
+        "camera": args.camera_name, "source_fps": args.fps * args.sample_step,
         "sample_step": args.sample_step,
         "timestamps_ms": [timestamp for timestamp, _ in frames],
         "frame_count": len(frames), "fps": args.fps, "duration_seconds": len(frames) / args.fps,

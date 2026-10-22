@@ -1,0 +1,15 @@
+{
+  "subjects": [
+    {
+      "description": "Deformed, missing, duplicated or replaced vehicles; changed paint colors; altered vehicle proportions, orientation, trajectories or relative distances; removed, enlarged, moving or reshaped original white ego-vehicle hood.",
+      "appearance_details": "Repainted signs or lane markings, unreadable invented text, melted vehicle details, ghosting, excessive smoothing, artificial material textures, snow completely burying vehicles, and snow obscuring windows, lights or vehicle identity."
+    }
+  ],
+  "background_setting": "Changed road geometry, displaced lane boundaries, moving road markings, warped buildings, invented or missing objects, bare building roofs, bare awnings, bare horizontal ledges, bare tree crowns or branches during sustained snowfall, snow painted uniformly onto vertical walls, windows, signs or tree trunks, black asphalt, bare wet asphalt, dark black tire tracks, thin snow dusting, isolated patchy snow, deep snowbanks, road burial, avalanche conditions, deep flooding, dry dusty road, rain, dense fog and whiteout.",
+  "aesthetics": {
+    "color_scheme": "Unnatural color casts, excessive saturation, crushed blacks, overexposure, globally washed-out colors, random brightness changes and changing vehicle colors.",
+    "patterns": "Regular repeated snowflakes, thick parallel rain-like streaks, tiled particle textures, stationary airborne flakes, uniform screen-space snow overlays, full-frame blur and flickering road surfaces."
+  },
+  "temporal_caption": "Flicker, object identity drift, abrupt weather changes, unstable road geometry, jumping optical flakes, tire spray disconnected from vehicles, changing traffic signals and discontinuous camera motion.",
+  "physical_realism": "Windshield wipers, invented windshield or cabin structures, large opaque optical droplets, lens-wide water smears, persistent obstruction of most of the view, physically impossible accumulation, snow in indoor regions, deep flood waves, rain, ice sheets and changed camera viewpoints."
+}

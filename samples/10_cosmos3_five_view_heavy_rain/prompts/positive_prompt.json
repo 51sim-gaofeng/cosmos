@@ -1,0 +1,34 @@
+{
+  "subjects": [
+    {
+      "description": "Original traffic participants in synchronized autonomous-driving camera footage during sustained heavy daytime rain.",
+      "appearance_details": "Preserve the identity, paint colors, dimensions, proportions, positions, orientation and motion of every source vehicle, road user and static scene object visible in each camera.",
+      "action": "Follow original trajectories and relative distances exactly. Tire contact with shallow road water produces dynamic splashes and backward spreading spray attached to moving wheels and vehicle wakes.",
+      "state_changes": "Dense fine rain streaks cross every view continuously. Heavy rain changes surface wetness, visibility and lighting, not scene geometry, object identity or camera pose."
+    }
+  ],
+  "background_setting": "Transform each source road view into sustained heavy rain. Asphalt becomes dark, saturated and visibly glossy, with shallow water films and localized puddles only in existing low areas. Existing vehicles, barriers and brighter sky regions produce recognizable softened reflections on wet pavement. Preserve road layout, lane markings, signs, buildings, vegetation, perspective and each source camera framing. Do not flood the road.",
+  "precipitation": "Dense, clearly visible fine rain streaks fall continuously across foreground and midground. Vary streak length, direction, density and brightness naturally with depth, gravity, wind and camera-relative motion. Distant rain curtains reduce background contrast gradually. Never use regular parallel grids or repeating particle textures.",
+  "visibility": "Keep nearby road geometry and vehicles identifiable. Use dim natural overcast daylight, with depth-dependent attenuation from rain rather than dense fog or a uniform whiteout.",
+  "camera_optics": "Enable only a few small irregular droplets on the camera optical surface, with local refraction and softness. Do not invent windshields, cabin reflections, camera housings or wipers.",
+  "lighting": {
+    "conditions": "Dim natural overcast daytime illumination during heavy rain, not night.",
+    "illumination_effect": "Preserve original lighting and existing object colors. Local reflections and highlights on water-film pavement obey road perspective and are disrupted by rain ripples and roughness. Do not invent headlights or change traffic signals."
+  },
+  "aesthetics": {
+    "composition": "Match each source camera's exact framing, horizon, field of view, mounting position and perspective.",
+    "color_scheme": "Natural dark wet asphalt, original vehicle colors, vegetation and gray overcast sky.",
+    "mood_atmosphere": "Photorealistic sustained heavy rain, shallow surface water and tire spray, without disaster flooding."
+  },
+  "cinematography": {
+    "camera_motion": "Follow each source camera trajectory exactly. No added shake, zoom, crop, stabilization shift or pose drift.",
+    "focus": "Keep near-scene details sharp except beneath sparse localized optical droplets; reduce distant contrast physically through rain."
+  },
+  "style_medium": "Live-action video",
+  "artistic_style": "Photorealistic autonomous-driving sensor footage",
+  "context": "Weather-only transformation of synchronized multi-camera driving footage into sustained heavy rain, retaining source scene identities, geometry and camera poses.",
+  "temporal_caption": "Throughout this {duration}-second clip, dense fine rain streaks fall continuously, dark glossy asphalt and shallow water films show local reflections of existing scene elements, and tire spray stays attached to original moving vehicles. Preserve source object identities, trajectories, lane markings, camera pose and framing without flicker.",
+  "physical_realism": "Rain trails follow gravity and plausible relative motion. Shallow puddles follow road geometry; splash and spray originate at tire-water contact. Reflections obey road-plane perspective and source lighting, then are broken by rain ripples and roughness. No wipers, deep flooding, snow, ice or full-frame rain overlays.",
+  "audio_description": "No generated audio.",
+  "aspect_ratio": "16,9"
+}
